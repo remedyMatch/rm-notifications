@@ -1,0 +1,60 @@
+spring:
+  profiles: test
+#  maail:
+#    default-encoding: UTF-8
+#    host: email-smtp.eu-central-1.amazonaws.com
+#    username: AKIARQLZ7MA7TAP3N2XI
+#    password: BAc6yuNNo4fqO0Xfzd2/2rKIgbqnTpYHODbWNBWani/X
+#    port: 587
+#    protocol: smtp
+#    test-connection: false
+#    properties:
+#      mail:
+#        smtp:
+#          auth: true
+#          starttls.enable: true
+
+  mail:
+    default-encoding: UTF-8
+    host: localhost
+    jndi-name:
+    username: username
+    password: secret
+    port: 2525
+    properties:
+      mail:
+        debug: false
+        smtp:
+          debug: false
+          auth: true
+          starttls: true
+    protocol: smtp
+    test-connection: false
+  freemarker:
+    charset: UTF-8
+    content-type: text/html
+    template-loader-path: classpath:/templates/
+  messages:
+    basename: messages
+
+logging:
+  level:
+    root: INFO
+    io.remedymatch: DEBUG
+
+remedy:
+  security:
+    disabled:
+      true
+
+io:
+  remedymatch:
+    engine: 
+      externalTaskUrl: egal
+    frontend:
+      url: egal
+    website:
+      impressumUrl: http://www.remedymatch.io/impressum
+      emailLogoUrl: http://www.remedymatch.io/assets/images/logo/mail-logo.png
+    email:
+      from: bittenichtantworten@remedymatch.io

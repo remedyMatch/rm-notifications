@@ -1,0 +1,38 @@
+spring:
+  profiles: prod
+  mail:
+    default-encoding: UTF-8
+    host: einsetzen
+    username: einsetzen
+    password: einsetzen
+    port: 587
+    protocol: smtp
+    test-connection: false
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls.enable: true
+  freemarker:
+    charset: UTF-8
+    content-type: text/html
+    template-loader-path: classpath:/templates/
+  messages:
+    basename: messages
+
+logging:
+  level:
+    root: WARN
+    io.remedymatch: INFO
+    
+io:
+  remedymatch:
+    engine: 
+      externalTaskUrl: http://www.remedymatch.io/engine
+    frontend:
+      url: http://www.remedymatch.io/app
+    website:
+      impressumUrl: http://www.remedymatch.io/impressum
+      emailLogoUrl: http://www.remedymatch.io/assets/images/logo/mail-logo.png
+    email:
+      from: bittenichtantworten@remedymatch.io
