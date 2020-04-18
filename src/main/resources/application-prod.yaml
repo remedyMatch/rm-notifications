@@ -28,7 +28,7 @@ logging:
 io:
   remedymatch:
     engine: 
-      externalTaskUrl: http://www.remedymatch.io/engine
+      externalTaskUrl: http://www.remedymatch.io/engine/rest
     frontend:
       url: http://www.remedymatch.io/app
     website:
