@@ -17,7 +17,7 @@ import javax.validation.constraints.NotNull;
 @ConfigurationProperties(prefix = "io.remedymatch.engine")
 public class EngineProperties {
     /**
-     * ExternalTask-URL
+     * ExternalTask - URL
      */
     @NotNull
     @NotBlank

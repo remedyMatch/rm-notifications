@@ -33,7 +33,7 @@ remedy:
 io:
   remedymatch:
     engine: 
-      externalTaskUrl: einsetzen
+      externalTaskUrl: http://localhost:8008/engine/rest
     frontend:
       url: einsetzen
     website:

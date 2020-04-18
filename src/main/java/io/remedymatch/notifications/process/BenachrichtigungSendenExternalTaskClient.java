@@ -15,7 +15,7 @@ import lombok.AllArgsConstructor;
 @Profile("!disableexternaltasks")
 class BenachrichtigungSendenExternalTaskClient {
 
-	private static final String EXTERNAL_TASK_KEY = "benachrichtigungSenden";
+	private static final String EXTERNAL_TASK_KEY = "rm_benachrichtigung_senden";
 
 	private final EngineProperties properties;
 	private final BenachrichtigungSendenExternalTaskHandler externalTaskHandler;
