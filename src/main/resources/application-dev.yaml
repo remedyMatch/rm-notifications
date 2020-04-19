@@ -2,9 +2,12 @@ spring:
   profiles: dev
   mail:
     default-encoding: UTF-8
-    host: einsetzen
-    username: einsetzen
-    password: einsetzen
+    host: email-smtp.eu-central-1.amazonaws.com
+    username: AKIARQLZ7MA7TAP3N2XI
+    password: BAc6yuNNo4fqO0Xfzd2/2rKIgbqnTpYHODbWNBWani/X
+#    host: einsetzen
+#    username: einsetzen
+#    password: einsetzen
     port: 587
     protocol: smtp
     test-connection: false
