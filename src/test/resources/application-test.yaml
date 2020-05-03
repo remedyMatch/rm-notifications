@@ -1,19 +1,5 @@
 spring:
   profiles: test
-#  maail:
-#    default-encoding: UTF-8
-#    host: email-smtp.eu-central-1.amazonaws.com
-#    username: AKIARQLZ7MA7TAP3N2XI
-#    password: BAc6yuNNo4fqO0Xfzd2/2rKIgbqnTpYHODbWNBWani/X
-#    port: 587
-#    protocol: smtp
-#    test-connection: false
-#    properties:
-#      mail:
-#        smtp:
-#          auth: true
-#          starttls.enable: true
-
   mail:
     default-encoding: UTF-8
     host: localhost
