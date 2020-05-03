@@ -40,7 +40,7 @@ public class BenachrichtigungEntity extends Auditable {
 	@Column(name = "USERNAME", nullable = false, updatable = false, length = 64)
 	private String username;
 
-	@Column(name = "KEY", nullable = false, updatable = false, length = 32)
+	@Column(name = "BENACHRICHTIGUNG_KEY", nullable = false, updatable = false, length = 64)
 	private String benachrichtigungKey;
 
 	@Column(name = "GELESEN", nullable = false, updatable = true)
