@@ -23,11 +23,12 @@ import com.icegreen.greenmail.configuration.GreenMailConfiguration;
 import com.icegreen.greenmail.util.ServerSetup;
 
 import freemarker.template.TemplateException;
+import io.remedymatch.notifications.TestApplication;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 
 @ExtendWith(SpringExtension.class)
-@SpringBootTest
+@SpringBootTest(classes = TestApplication.class)
 @AutoConfigureMockMvc
 @ActiveProfiles(profiles = { "test", "disableexternaltasks" })
 @Tag("InMemory")
@@ -50,7 +51,7 @@ class EngineEmailServiceShould {
 				.personName("Peter Pan") //
 				.personEmail("peter.pan@remedymatch.test") //
 				.mailSubject("Wichtige Beschreibung des Mails") //
-				.mailTemplate("rm-angebot-anfrage-erhalten-de.ftl") //
+				.mailTemplate("rm-sample-benachrichtigung-de.ftl") //
 				.build());
 
 		final MimeMessage[] emails = greenMail.getReceivedMessages();

@@ -26,10 +26,12 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import com.icegreen.greenmail.configuration.GreenMailConfiguration;
 import com.icegreen.greenmail.util.ServerSetup;
 
+import io.remedymatch.notifications.TestApplication;
+
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 
 @ExtendWith(SpringExtension.class)
-@SpringBootTest
+@SpringBootTest(classes = TestApplication.class)
 @AutoConfigureMockMvc
 @ActiveProfiles(profiles = { "test", "disableexternaltasks" })
 @Tag("InMemory")
@@ -53,7 +55,7 @@ class BenachrichtigungSendenExternalTaskHandlerShould {
 		given(externalTask.getProcessInstanceId()).willReturn("SampleProzessInstanzId");
 		given(externalTask.getVariable(ENGINE_VARIABLE_BENACHRICHTIGUNG_AN_NAME)).willReturn("Peter Pan");
 		given(externalTask.getVariable(ENGINE_VARIABLE_BENACHRICHTIGUNG_AN_EMAIL)).willReturn("matus.mala@gmail.com");
-		given(externalTask.getVariable(ENGINE_VARIABLE_BENACHRICHTIGUNG_KEY)).willReturn("rm-angebot-anfrage-erhalten");
+		given(externalTask.getVariable(ENGINE_VARIABLE_BENACHRICHTIGUNG_KEY)).willReturn("sample-benachrichtigung");
 
 		externalTaskHandler.handleExternalTask(externalTask);
 
@@ -61,7 +63,7 @@ class BenachrichtigungSendenExternalTaskHandlerShould {
 		assertEquals(1, emails.length);
 		final MimeMessage email = emails[0];
 //		assertEquals("bittenichtantworten@remedymatch.io", email.getFrom());
-		assertEquals("Hier kommt das EMail Subjekt für Angebot Anfrage erhalten ...", email.getSubject());
+		assertEquals("Hier kommt das EMail Subjekt ...", email.getSubject());
 //		assertEquals("body", GreenMailUtil.getBody(email));1
 	}
 }

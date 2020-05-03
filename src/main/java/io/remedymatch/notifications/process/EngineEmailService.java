@@ -12,9 +12,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
 import freemarker.template.TemplateException;
-import io.remedymatch.notifications.email.Email;
-import io.remedymatch.notifications.email.EmailService;
 import io.remedymatch.notifications.properties.FrontendProperties;
+import io.remedymatch.notifications.infrastructure.email.Email;
+import io.remedymatch.notifications.infrastructure.email.EmailService;
 import io.remedymatch.notifications.properties.EmailProperties;
 import lombok.AllArgsConstructor;
 
