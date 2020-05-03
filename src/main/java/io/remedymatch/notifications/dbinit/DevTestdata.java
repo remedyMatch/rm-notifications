@@ -37,7 +37,7 @@ public class DevTestdata implements ApplicationListener<ContextRefreshedEvent> {
 					.build());
 		} catch (Exception ex) {
 			ex.printStackTrace();
-			log.error("Fehler beim Erstellen des initialen Datenbestandes", ex);
+			log.error("Fehler beim Erstellen der Testdaten für Bedarf User", ex);
 		}
 	}
 }
