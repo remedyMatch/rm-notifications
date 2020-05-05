@@ -1,4 +1,4 @@
-package io.remedymatch.notifications.email;
+package io.remedymatch.notifications.infrastructure.email;
 
 import java.util.HashMap;
 import java.util.Map;

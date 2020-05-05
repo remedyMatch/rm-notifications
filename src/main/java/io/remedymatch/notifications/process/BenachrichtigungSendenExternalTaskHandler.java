@@ -1,18 +1,13 @@
 package io.remedymatch.notifications.process;
 
-import static java.lang.String.format;
-import static org.apache.commons.lang3.StringUtils.isNotBlank;
-
-import java.util.Locale;
-
 import org.apache.commons.lang3.StringUtils;
 import org.camunda.bpm.client.task.ExternalTask;
-import org.springframework.context.MessageSource;
 import org.springframework.mail.MailException;
 import org.springframework.stereotype.Service;
-import org.springframework.util.Assert;
 import org.springframework.validation.annotation.Validated;
 
+import io.remedymatch.notifications.domain.BenachrichtigungMessageService;
+import io.remedymatch.notifications.domain.BenachrichtigungService;
 import lombok.AllArgsConstructor;
 import lombok.val;
 import lombok.extern.slf4j.Slf4j;
@@ -23,12 +18,14 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 class BenachrichtigungSendenExternalTaskHandler {
 
+	static final String ENGINE_VARIABLE_BENACHRICHTIGUNG_AN_USER = "benachrichtigungAnUser";
 	static final String ENGINE_VARIABLE_BENACHRICHTIGUNG_AN_NAME = "benachrichtigungAnName";
 	static final String ENGINE_VARIABLE_BENACHRICHTIGUNG_AN_EMAIL = "benachrichtigungAnEmail";
 	static final String ENGINE_VARIABLE_BENACHRICHTIGUNG_KEY = "benachrichtigungKey";
 
 	private final EngineEmailService engineEmailService;
-	private final MessageSource message;
+	private final BenachrichtigungService benachrichtigungService;
+	private final BenachrichtigungMessageService messageService;
 
 	void handleExternalTask(final ExternalTask externalTask) {
 
@@ -40,12 +37,27 @@ class BenachrichtigungSendenExternalTaskHandler {
 					String.format("Benachrichtigung-Key fehlt. (ProzessInstanzId: %s)", processInstanceId));
 		}
 
+		// Benachrichtigung erstellen
+		if (externalTask.getAllVariables().containsKey(ENGINE_VARIABLE_BENACHRICHTIGUNG_AN_USER)) {
+			benachrichtigungService.benachrichtigungErstellen(//
+					externalTask.getVariable(ENGINE_VARIABLE_BENACHRICHTIGUNG_AN_USER), //
+					benachrichtigungKey);
+		}
+		
+		// EMail senden (koennte optional sein in Zukunft)
+		emailSenden(externalTask, processInstanceId, benachrichtigungKey);
+	}
+
+	private void emailSenden(//
+			final ExternalTask externalTask, //
+			final String processInstanceId, //
+			String benachrichtigungKey) {
 		val engineEmail = EngineEmail.builder() //
 				.prozessInstanzId(processInstanceId) //
 				.personName(externalTask.getVariable(ENGINE_VARIABLE_BENACHRICHTIGUNG_AN_NAME)) //
 				.personEmail(externalTask.getVariable(ENGINE_VARIABLE_BENACHRICHTIGUNG_AN_EMAIL)) //
-				.mailTemplate(getMessage(format("email.%s.template", benachrichtigungKey))) //
-				.mailSubject(getMessage(format("email.%s.subject", benachrichtigungKey))) //
+				.mailSubject(messageService.getEmailSubject(benachrichtigungKey)) //
+				.mailTemplate(messageService.getEmailTemplate(benachrichtigungKey)) //
 				.build();
 
 		try {
@@ -58,16 +70,4 @@ class BenachrichtigungSendenExternalTaskHandler {
 			throw new RuntimeException(e);
 		}
 	}
-
-	private String getMessage(final String messageKey) {
-		val messageWert = message.getMessage(messageKey, null, Locale.GERMAN);
-		Assert.isTrue(isNotBlank(messageWert), format("Kein Wert für %s nicht gefunden", messageKey));
-
-		return messageWert;
-	}
-//	private 
-//	ReloadableResourceBundleMessageSource resource = new ReloadableResourceBundleMessageSource();
-//    resource.setBasename("WEB-INF/languages/messages");
-//    resource.setDefaultEncoding("UTF-8");
-//    return resource;
 }
