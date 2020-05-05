@@ -13,8 +13,8 @@ spring:
   jpa:
     database-platform: org.hibernate.dialect.MySQL8Dialect
     hibernate:
-#      ddl-auto: create-drop
-#      ddl-auto: create
+      #      ddl-auto: create-drop
+      #      ddl-auto: create
       ddl-auto: update
       generate-ddl: true
     properties:
@@ -47,10 +47,10 @@ logging:
   level:
     root: WARN
     io.remedymatch: INFO
-    
+
 io:
   remedymatch:
-    engine: 
+    engine:
       externalTaskUrl: http://www.remedymatch.io/engine/rest
     frontend:
       url: http://www.remedymatch.io/app
@@ -59,3 +59,13 @@ io:
       emailLogoUrl: http://www.remedymatch.io/assets/images/logo/mail-logo.png
     email:
       from: bittenichtantworten@remedymatch.io
+    keycloak:
+      serverUrl: einsetzen
+      user:
+        realm: rmio
+      client:
+        realm: rmio
+        username: einsetzen
+        password: einsetzen
+        clientId: admin-cli
+        clientSecret: admin
