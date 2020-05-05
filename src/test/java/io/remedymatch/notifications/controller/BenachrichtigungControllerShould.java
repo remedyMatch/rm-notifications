@@ -4,7 +4,8 @@ import static org.hamcrest.Matchers.emptyString;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -168,8 +169,26 @@ public class BenachrichtigungControllerShould {
 				.andExpect(status().isOk());
 
 		assertTrue(benachrichtigungRepository.getOne(neueBenachrichtigung.getId()).isGelesen());
+
+		// es sollen immer noch drei Benachrichtigungen zurueckgeliefert werden
+		MockMvcBuilders.webAppContextSetup(webApplicationContext).build()
+				.perform(MockMvcRequestBuilders //
+						.get("/") //
+						.contentType(MediaType.APPLICATION_JSON) //
+						.accept(MediaType.APPLICATION_JSON)) //
+				.andDo(print()) //
+				.andExpect(status().isOk()) //
+				.andExpect(jsonPath("$", hasSize(3))) //
+				.andExpect(jsonPath("$[0].id", is(alteBenachrichtigungUngelesenId.getValue().toString()))) //
+				.andExpect(jsonPath("$[0].nachricht").value("Message Mock fuer \"alte-benachrichtigung-ungelesen\"")) //
+				.andExpect(jsonPath("$[1].id", not(emptyString()))) //
+				.andExpect(jsonPath("$[1].nachricht").value("neue-benachrichtigung")) //
+				.andExpect(jsonPath("$[1].gelesen").value(true)) //
+				.andExpect(jsonPath("$[2].id", is(alteBenachrichtigungGelesenId.getValue().toString()))) //
+				.andExpect(jsonPath("$[2].nachricht").value("Message Mock fuer \"alte-benachrichtigung-gelesen\"")) //
+				.andReturn();
 	}
-	
+
 	@Test
 	@Transactional
 	@WithMockJWT(groupsClaim = { "testgroup" }, usernameClaim = "sample-username")
